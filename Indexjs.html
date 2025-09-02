@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZamzzStore - Jual Produk Digital Terbaik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --text: #2d3436;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary: #7c6cf7;
+            --secondary: #7268db;
+            --accent: #ff7ba9;
+            --text: #f1f2f6;
+            --background: #121212;
+            --card-bg: #1e1e1e;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px var(--shadow);
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px var(--shadow);
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .product-features {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .product-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-feature i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .payment-methods {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .payment-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .payment-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .payment-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: rgba(108, 92, 231, 0.1);
+            min-width: 120px;
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <header>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+        <div class="logo">
+            <i class="fas fa-store"></i> ZamzzStore
+        </div>
+        <div class="tagline">Produk Digital Terbaik dengan Harga Terjangkau</div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Panel Pterodactyl</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <h3 class="product-title">1 GB RAM</h3>
+                <div class="product-price">Rp 1.000</div>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-microchip"></i> RAM: 1 GB
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-hdd"></i> Storage: SSD
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-tachometer-alt"></i> Performance: Standard
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">2 GB RAM</h3>
+                <div class="product-price">Rp 2.000</div>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-microchip"></i> RAM: 2 GB
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-hdd"></i> Storage: SSD
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-tachometer-alt"></i> Performance: Standard
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">Unlimited RAM</h3>
+                <div class="product-price">
+                    <span style="text-decoration: line-through; color: var(--text); opacity: 0.7;">Rp 10.000</span>
+                    <span>Rp 5.000</span>
+                </div>
+                <div class="discount-badge">DISKON</div>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-microchip"></i> RAM: Unlimited
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-hdd"></i> Storage: SSD
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-tachometer-alt"></i> Performance: Maximum
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Layanan Lainnya</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <h3 class="product-title">PT Panel</h3>
+                <div class="product-price">Rp 7.000</div>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-server"></i> Panel berkualitas tinggi
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-shield-alt"></i> Keamanan terjamin
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">Own Panel</h3>
+                <div class="product-price">Rp 9.000</div>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-server"></i> Panel pribadi
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-cog"></i> Kustomisasi penuh
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">TK Panel</h3>
+                <div class="product-price">Rp 10.000</div>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-server"></i> Panel premium
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-bolt"></i> Performa tinggi
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Script Bug WhatsApp</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <h3 class="product-title">Bot Bug WA X-Vallow</h3>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-code"></i> Via Telegram/WhatsApp
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-tools"></i> Fitur lengkap
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Tanya Admin</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">Bot Bug Ambacrash</h3>
+                <div class="product-price">SEDANG CLOSE</div>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-exclamation-triangle"></i> Sementara tidak tersedia
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-outline">Info Selengkapnya</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">Bot MD & Lainnya</h3>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-robot"></i> Berbagai bot tersedia
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-info-circle"></i> Tanya admin untuk detail
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Tanya Admin</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Layanan Lainnya</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <h3 class="product-title">Jasa Band WA Sementara</h3>
+                <div class="product-price">Rp 8.000</div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">Jasa Band WA Permanen</h3>
+                <div class="product-price">Rp 15.000</div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">NOKOS WhatsApp Fresh</h3>
+                <div class="product-price">Rp 5.000</div>
+                <div class="product-features">
+                    <div class="product-feature">
+                        <i class="fas fa-flag"></i> Reg Indonesia & Filipina
+                    </div>
+                    <div class="product-feature">
+                        <i class="fas fa-info-circle"></i> Negara lain tanya admin
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <a href="https://t.me/zamzzstore" class="btn btn-primary">Beli Sekarang</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <h3 class="payment-title">Metode Pembayaran</h3>
+            <div class="payment-options">
+                <div class="payment-option">
+                    <i class="fab fa-dana payment-icon"></i>
+                    <span>DANA</span>
+                    <small>083120936609</small>
+                </div>
+                <div class="payment-option">
+                    <i class="fas fa-money-bill-wave payment-icon"></i>
+                    <span>GOPAY</span>
+                    <small>0895800166456</small>
+                </div>
+                <div class="payment-option">
+                    <i class="fas fa-qrcode payment-icon"></i>
+                    <span>QRIS</span>
+                    <small>Minta ke admin</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <h3 class="section-title">Hubungi Kami</h3>
+            <p>Untuk informasi lebih lanjut atau pertanyaan, silakan hubungi kami melalui:</p>
+            <div class="contact-buttons">
+                <a href="https://wa.me/6289530017342" class="contact-btn">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="https://t.me/zamzzstore" class="contact-btn">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 ZamzzStore - Jual Produk Digital Terbaik</p>
+        <p>Terima kasih telah berbelanja di toko kami</p>
+    </footer>
+
+    <script>
+        // Fungsi untuk membuat bintang
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starsCount = 100;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Posisi acak
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Ukuran acak
+                const size = Math.random() * 3;
+                
+                // Durasi animasi acak
+                const duration = Math.random() * 5 + 5;
+                
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.anim
